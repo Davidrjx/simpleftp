@@ -17,7 +17,7 @@ if __name__ == "__main__":
     ###
     sobj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sobj.setblocking(1)
-    sobj.bind(('10.69.217.153', 60001))
+    sobj.bind((server_ip, server_port))
     sobj.listen(1)
     print 'Server listening...'
     while True:

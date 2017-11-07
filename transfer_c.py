@@ -26,7 +26,7 @@ def transfer_file_stream(fd):
     only applicable to regular or Django's TemporaryUploadedFile object
     """
     cliobj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    cliobj.connect(('10.69.217.153', 60001))
+    cliobj.connect((server_ip, server_port))
     blks = fd.size
     offset = 0
     res = ''
@@ -49,7 +49,7 @@ def traditional_transfer_file_stream(fd):
     traditional socket send/sendall, worse than send_file
     """
     cliobj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    cliobj.connect(('10.69.217.153', 60001))
+    cliobj.connect((server_ip, server_port))
     cliobj.sendall(fd.read())
     res = cliobj.recv(4096)
     cliobj.close()
