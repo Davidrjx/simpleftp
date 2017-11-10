@@ -22,13 +22,15 @@ if __name__ == "__main__":
     print 'Server listening...'
     while True:
         newobj, addr = sobj.accept()
-        newobj.setblocking(0) #this is a MUST
+        ##non-blocking unsuitable in larger bytes stream 
+        #newobj.setblocking(0)
+        ##set sock timeout, currently more common
+        newobj.settimeout(6.6) 
         print "client {} connection accept.".format(addr[0])
         ##write socket data to local disk
         sfd = open(local_file_path, 'wb+') #modification in your case
         r_bytes = 0
         while True:
-            #newobj.setblocking(0)
             try:
                 fdata = newobj.recv(4096)
                 if fdata:
