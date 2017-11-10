@@ -34,7 +34,7 @@ def transfer_file_stream(fd):
         ss = sendfile(cliobj.fileno(), fd.fileno(), offset, blks)
         if ss == 0:
             while True:
-                tmp_res = cliobj.recv(4096)
+                tmp_res = cliobj.recv(4096*2)
                 if not tmp_res: break
                 res += tmp_res
             break
@@ -51,6 +51,10 @@ def traditional_transfer_file_stream(fd):
     cliobj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     cliobj.connect((server_ip, server_port))
     cliobj.sendall(fd.read())
-    res = cliobj.recv(4096)
+    res = ''
+    while True:
+        tmp_res = cliobj.recv(4096*2)
+        if not tmp_res: break
+        res += tmp_res
     cliobj.close()
     return res
